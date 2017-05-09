@@ -19,6 +19,11 @@ public class Main {
     private static final String CONNECTION_ESTABLISHED = "Connected";
     private static final String COUNTDAY_COLUMN = "countDay";
     private static final String DAYNAME_COLUMN = "dayName";
+    private static final String ID_COLUMN = "id";
+    private static final String ITEMNAME_COLUMN = "itemName";
+    private static final String ITEM1_COLUMN = "item1";
+    private static final String ITEM2_COLUMN = "item2";
+    private static final String ITEM3_COLUMN = "item3";
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Class.forName(DRIVER);
@@ -28,7 +33,7 @@ public class Main {
 
         System.out.println(CONNECTION_ESTABLISHED);
 
-        while(true) {
+        while (true) {
             System.out.println("************************");
             System.out.println("______Meal planner______");
             System.out.println("1: see the current meal plan");
@@ -68,37 +73,37 @@ public class Main {
 
             ResultSet resultSet1 = (connect.createStatement().executeQuery("select itemName from items where id =" +
                     resultSet.getString(2)));
-            if(resultSet1.next()) {
+            if (resultSet1.next()) {
                 breakfastItem1 = resultSet1.getString(1);
             }
 
             resultSet1 = (connect.createStatement().executeQuery("select itemName from items where id =" +
                     resultSet.getString(3)));
-            if(resultSet1.next()) {
+            if (resultSet1.next()) {
                 breakfastItem2 = resultSet1.getString(1);
             }
 
             resultSet1 = (connect.createStatement().executeQuery("select itemName from items where id =" +
                     resultSet.getString(4)));
-            if(resultSet1.next()) {
+            if (resultSet1.next()) {
                 breakfastItem3 = resultSet1.getString(1);
             }
 
             resultSet1 = (connect.createStatement().executeQuery("select itemName from items where id =" +
                     resultSet.getString(5)));
-            if(resultSet1.next()) {
+            if (resultSet1.next()) {
                 lunchItem1 = resultSet1.getString(1);
             }
 
             resultSet1 = (connect.createStatement().executeQuery("select itemName from items where id =" +
                     resultSet.getString(6)));
-            if(resultSet1.next()) {
+            if (resultSet1.next()) {
                 lunchItem2 = resultSet1.getString(1);
             }
 
             resultSet1 = (connect.createStatement().executeQuery("select itemName from items where id =" +
                     resultSet.getString(7)));
-            if(resultSet1.next()) {
+            if (resultSet1.next()) {
                 lunchItem3 = resultSet1.getString(1);
             }
 
@@ -119,8 +124,8 @@ public class Main {
 
     private static void writeResultSetItems(ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
-            int itemId = resultSet.getInt("id");
-            String itemName = resultSet.getString("itemName");
+            int itemId = resultSet.getInt(ID_COLUMN);
+            String itemName = resultSet.getString(ITEMNAME_COLUMN);
             System.out.print(itemId + "\t");
             System.out.println(itemName);
         }
@@ -128,17 +133,17 @@ public class Main {
 
     private static void writeResultBreakfastLunch(ResultSet resultSet, Connection connect) throws SQLException {
         while (resultSet.next()) {
-            int itemId = resultSet.getInt("id");
-            String item1 = resultSet.getString("item1");
-            String item2 = resultSet.getString("item2");
-            String item3 = resultSet.getString("item3");
+            int itemId = resultSet.getInt(ID_COLUMN);
+            String item1 = resultSet.getString(ITEM1_COLUMN);
+            String item2 = resultSet.getString(ITEM2_COLUMN);
+            String item3 = resultSet.getString(ITEM3_COLUMN);
             System.out.print(itemId + "\t");
 
             ResultSet resultSet1 = connect.createStatement().executeQuery("select itemName from items where id=" +
                     item1 + " or id=" + item2 + " or id=" + item3);
 
-            while (resultSet1.next()){
-                System.out.print(resultSet1.getString(1)+", ");
+            while (resultSet1.next()) {
+                System.out.print(resultSet1.getString(1) + COMMA);
             }
             System.out.println();
         }
@@ -146,6 +151,7 @@ public class Main {
 
     private static void customPlan(Connection connect) throws SQLException {
         System.out.println("Enter the id of the day...");
+
         writeResultSetDay(connect.createStatement().executeQuery("select * from mealplanner.day"));
         int dayId = Integer.parseInt(new Scanner(System.in).nextLine());
 
@@ -153,7 +159,7 @@ public class Main {
                 "where countDay=" + dayId);
 
         if (resultSet.next()) {
-            System.out.println("The day you chose: " + resultSet.getString("dayName"));
+            System.out.println("The day you chose: " + resultSet.getString(DAYNAME_COLUMN));
 
             System.out.println("Breakfast or lunch?");
             System.out.println("1\tbreakfast");
@@ -194,6 +200,7 @@ public class Main {
 
                     if (!flag) {
                         System.out.println("Choose id of 3 items, separate the ids with <space>");
+
                         writeResultSetItems(connect.createStatement().executeQuery("select * from mealplanner.items"));
                         String[] itemIds = new Scanner(System.in).nextLine().split(" ");
 
@@ -204,14 +211,13 @@ public class Main {
                         ResultSet resultSetCheck = connect.createStatement().executeQuery("select * from meal " +
                                 "where dayid=" + dayId);
                         ResultSet resultSet2 = connect.createStatement().executeQuery("select max(id) from breakfast");
-                        if(resultSet2.next()) {
+                        if (resultSet2.next()) {
                             int id = resultSet2.getInt(1);
 
-                            if(resultSetCheck.next()) {
+                            if (resultSetCheck.next()) {
                                 connect.createStatement().executeUpdate("update meal set breakfastid = " +
                                         id + " where dayid=" + dayId);
-                            }
-                            else {
+                            } else {
                                 connect.createStatement().executeUpdate("insert into meal(id, dayid, breakfastid) " +
                                         "values(default, " + dayId + ", " + id + ")");
                             }
@@ -257,19 +263,17 @@ public class Main {
                                 itemIds[1] + ", " + itemIds[2] + ")");
 
 
-
                         ResultSet resultSetCheck = connect.createStatement().executeQuery("select * from meal " +
                                 "where dayid=" + dayId);
                         ResultSet resultSet2 = connect.createStatement().executeQuery("select max(id) from lunch");
 
-                        if(resultSet2.next()) {
+                        if (resultSet2.next()) {
                             int id = resultSet2.getInt(1);
 
                             if (resultSetCheck.next()) {
                                 connect.createStatement().executeUpdate("update meal set lunchid = " + id +
                                         " where dayid=" + dayId);
-                            }
-                            else {
+                            } else {
                                 connect.createStatement().executeUpdate("insert into meal(id, dayid, lunchid) " +
                                         "values(default, " + dayId + ", " + id + ")");
                             }
