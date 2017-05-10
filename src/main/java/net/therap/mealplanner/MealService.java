@@ -17,6 +17,8 @@ public class MealService {
     private static final String MSG4 = "3\t Create custom meal plan\n";
     private static final String MSG5 = "4\t Add item\n";
     private static final String MSG6 = "Insert item name";
+    private static final String DAY = "Day: ";
+    private static final String SLOT = " Slot: ";
 
     private MealDao mealDao;
 
@@ -28,11 +30,14 @@ public class MealService {
         System.out.println(MSG1 + MSG2 + MSG3 + MSG4 + MSG5);
     }
 
-    public void showCurrentMealPlan(Connection connect){
-
+    public void showCurrentMealPlan(Connection connect) throws SQLException{
+        printMeal(mealDao.currentMeals(connect));
     }
 
-    public void createCustomPlan(Connection connect){
+    public void createCustomPlan(Connection connect) throws SQLException{
+        System.out.println("Desired slot to assign item...");
+        showCurrentMealPlan(connect);
+
 
     }
 
@@ -44,9 +49,19 @@ public class MealService {
 
     public void viewItems(Connection connect) throws SQLException{
         List<Item> items = mealDao.generateItems(connect);
+        printItem(items);
+    }
 
-        for(Item item: items){
+    public void printItem(List<Item> list){
+        for(Item item: list){
             System.out.println(item.getName());
+        }
+    }
+
+    public void printMeal(List<Meal> list){
+        for(Meal item: list){
+            System.out.println(item.getId() + DAY + item.getDay().name() + SLOT + item.getSlot().name());
+            printItem(item.getItems());
         }
     }
 }
