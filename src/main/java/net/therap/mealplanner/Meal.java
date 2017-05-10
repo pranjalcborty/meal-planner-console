@@ -7,12 +7,12 @@ import java.util.List;
  * @since 5/10/17
  */
 public class Meal {
+    List<Item> items;
     private int id;
     private Day day;
     private Slot slot;
-    List<Item> items;
 
-    public Meal(int id, Day day, Slot slot, List<Item> items){
+    public Meal(int id, Day day, Slot slot, List<Item> items) {
         setId(id);
         setDay(day);
         setItems(items);

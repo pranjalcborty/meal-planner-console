@@ -1,7 +1,5 @@
 package net.therap.mealplanner;
 
-import java.util.List;
-
 /**
  * @author pranjal.chakraborty
  * @since 5/10/17
@@ -10,7 +8,7 @@ public class Item {
     private int id;
     private String name;
 
-    public Item (int id, String name){
+    public Item(int id, String name) {
         setId(id);
         setName(name);
     }

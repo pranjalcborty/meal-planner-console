@@ -10,17 +10,17 @@ import java.util.Scanner;
  */
 public class MealController {
 
-    public static void main (String [] args) throws SQLException{
+    public static void main(String[] args) throws SQLException {
         MealService service = new MealService();
         Connection connect = ConnectionService.connect();
 
-        while(true) {
+        while (true) {
             service.welcomeMessage();
             int input = Integer.parseInt(new Scanner(System.in).nextLine());
 
             switch (input) {
                 case 1:
-                    service.showCurrentMealPlan(connect);
+                    service.showCurrentMealPlan(connect, true);
                     break;
                 case 2:
                     service.viewItems(connect);
