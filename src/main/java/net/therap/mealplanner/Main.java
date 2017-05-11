@@ -1,6 +1,6 @@
 package net.therap.mealplanner;
 
-import net.therap.mealplanner.helper.ConnectionHelper;
+import net.therap.mealplanner.helper.Helper;
 import net.therap.mealplanner.helper.MealService;
 
 import java.sql.Connection;
@@ -15,30 +15,27 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         MealService service = new MealService();
-        Connection connect = ConnectionHelper.connect();
+        Connection connect = Helper.connect();
 
         while (true) {
             service.welcomeMessage();
             int input = Integer.parseInt(new Scanner(System.in).nextLine());
 
-            if (input >= 5){
-                connect.close();
-                break;
-            }
-            switch (input) {
-                case 1:
+            switch (Helper.getOption(input)) {
+                case VIEW_PLAN:
                     service.showCurrentMealPlan(connect);
                     break;
-                case 2:
+                case VIEW_ITEMS:
                     service.viewItems(connect);
                     break;
-                case 3:
+                case ADD_PLAN:
                     service.createCustomPlan(connect);
                     break;
-                case 4:
+                case ADD_ITEM:
                     service.addNewItem(connect);
                     break;
-                default:
+                case INVALID:
+                    service.invalidMessage();
                     break;
             }
         }

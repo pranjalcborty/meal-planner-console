@@ -104,4 +104,8 @@ public class MealService {
             System.out.println(item.getId() + TAB + DAY + item.getDay().name() + SLOT + item.getSlot().name());
         }
     }
+
+    public void invalidMessage() {
+        System.out.println("Invalid input. Please try again.");
+    }
 }
