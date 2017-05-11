@@ -23,7 +23,7 @@ public class Main {
 
             switch (Helper.getOption(input)) {
                 case VIEW_PLAN:
-                    helper.showMealPlans(connect);
+                    helper.showMealPlans();
                     break;
                 case VIEW_ITEMS:
                     helper.showItems(connect);

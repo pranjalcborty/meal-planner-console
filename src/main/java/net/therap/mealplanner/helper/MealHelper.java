@@ -44,34 +44,34 @@ public class MealHelper {
         System.out.println(MSG1 + MSG2 + MSG3 + MSG4 + MSG5);
     }
 
-    public void showMealPlans(Connection connect) throws SQLException {
-        printMeal(mealDao.currentMeals(connect));
+    public void showMealPlans() throws SQLException {
+        printMeal(mealDao.currentMeals());
     }
 
-    public void addPlan(Connection connect) throws SQLException {
+    public void addPlan() throws SQLException {
         System.out.println(MSG7);
-        printMealWithHeader(mealDao.currentMeals(connect));
+        printMealWithHeader(mealDao.currentMeals());
         System.out.println(MSG8);
         int slot = Integer.parseInt(new Scanner(System.in).nextLine());
 
         System.out.println(MSG9);
-        showItems(connect);
+        showItems();
         System.out.println(MSG10);
 
         String[] tokens = (new Scanner(System.in).nextLine()).split(SPACE);
         for (String token : tokens) {
-            mealDao.addItemToMeal(connect, Integer.parseInt(token), slot);
+            mealDao.addItemToMeal(Integer.parseInt(token), slot);
         }
     }
 
-    public void addItem(Connection connect) throws SQLException {
+    public void addItem() throws SQLException {
         System.out.println(MSG6);
         String itemName = new Scanner(System.in).nextLine();
-        itemDao.addItem(itemName, connect);
+        itemDao.addItem(itemName);
     }
 
-    public void showItems(Connection connect) throws SQLException {
-        List<Item> items = itemDao.generateItems(connect);
+    public void showItems() throws SQLException {
+        List<Item> items = itemDao.generateItems();
         printItem(items, false);
     }
 

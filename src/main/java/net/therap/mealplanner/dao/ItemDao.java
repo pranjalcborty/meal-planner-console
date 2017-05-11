@@ -1,6 +1,7 @@
 package net.therap.mealplanner.dao;
 
 import net.therap.mealplanner.domains.Item;
+import net.therap.mealplanner.helper.Helper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,8 @@ public class ItemDao {
     private static final String GET_ITEMID_STRING = "SELECT item_id FROM meal_item WHERE meal_id = ?";
     private static final String GET_ITEMNAME_STRING = "SELECT item_name FROM items WHERE item_id = ?";
 
-    public static List<Item> getItems(Connection connect, int daySlot) throws SQLException {
+    public static List<Item> getItems(int daySlot) throws SQLException {
+        Connection connect = Helper.connect();
         List<Item> items = new ArrayList<>();
 
         PreparedStatement preparedStatement = connect.prepareStatement(GET_ITEMID_STRING);
@@ -37,16 +39,22 @@ public class ItemDao {
             }
         }
 
+        connect.close();
         return items;
     }
 
-    public void addItem(String itemName, Connection connect) throws SQLException {
+    public void addItem(String itemName) throws SQLException {
+        Connection connect = Helper.connect();
+
         PreparedStatement preparedStatement = connect.prepareStatement(ADD_ITEM_STRING);
         preparedStatement.setString(1, itemName);
         preparedStatement.executeUpdate();
+
+        connect.close();
     }
 
-    public List<Item> generateItems(Connection connect) throws SQLException {
+    public List<Item> generateItems() throws SQLException {
+        Connection connect = Helper.connect();
         List<Item> items = new ArrayList<>();
         ResultSet resultSet = connect.prepareStatement(VIEW_ITEMS_STRING).executeQuery();
 
@@ -54,6 +62,7 @@ public class ItemDao {
             items.add(new Item(resultSet.getInt("item_id"), resultSet.getString("item_name")));
         }
 
+        connect.close();
         return items;
     }
 }
