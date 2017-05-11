@@ -10,7 +10,8 @@ import java.util.List;
  * @since 5/10/17
  */
 public class Meal {
-    List<Item> items;
+
+    private List<Item> items;
     private int id;
     private Day day;
     private Type slot;
