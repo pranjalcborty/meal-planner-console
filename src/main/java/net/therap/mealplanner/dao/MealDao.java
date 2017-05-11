@@ -31,7 +31,7 @@ public class MealDao {
             List<Item> items = ItemDao.getItems(daySlot);
 
             meals.add(new Meal(resultSet.getInt("meal_id"),
-                    DayDao.getDay(connect, daySlot), TypeDao.getType(connect, daySlot), items));
+                    DayDao.getDay(daySlot), TypeDao.getType(daySlot), items));
         }
 
         connect.close();

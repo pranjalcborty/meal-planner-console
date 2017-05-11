@@ -15,16 +15,19 @@ import java.sql.SQLException;
 public class TypeDao {
     private static final String FIND_DAY = "SELECT * FROM meals WHERE meal_id = ?";
 
-    public static Type getType(Connection connect, int daySlot) throws SQLException {
+    public static Type getType(int daySlot) throws SQLException {
 
+        Connection connect = Helper.connect();
         PreparedStatement preparedStatement = connect.prepareStatement(FIND_DAY);
         preparedStatement.setInt(1, daySlot);
         ResultSet resultSet = preparedStatement.executeQuery();
 
+        Type type = null;
         if (resultSet.next()) {
-            return Type.valueOf(resultSet.getString("meal_type"));
+            type = Type.valueOf(resultSet.getString("meal_type"));
         }
 
-        return null;
+        connect.close();
+        return type;
     }
 }
