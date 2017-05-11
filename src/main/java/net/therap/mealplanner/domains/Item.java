@@ -1,4 +1,4 @@
-package net.therap.mealplanner;
+package net.therap.mealplanner.domains;
 
 /**
  * @author pranjal.chakraborty

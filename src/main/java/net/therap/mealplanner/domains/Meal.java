@@ -1,4 +1,7 @@
-package net.therap.mealplanner;
+package net.therap.mealplanner.domains;
+
+import net.therap.mealplanner.enums.Day;
+import net.therap.mealplanner.enums.Type;
 
 import java.util.List;
 
@@ -10,9 +13,9 @@ public class Meal {
     List<Item> items;
     private int id;
     private Day day;
-    private Slot slot;
+    private Type slot;
 
-    public Meal(int id, Day day, Slot slot, List<Item> items) {
+    public Meal(int id, Day day, Type slot, List<Item> items) {
         setId(id);
         setDay(day);
         setItems(items);
@@ -27,11 +30,11 @@ public class Meal {
         this.items = items;
     }
 
-    public Slot getSlot() {
+    public Type getSlot() {
         return slot;
     }
 
-    public void setSlot(Slot slot) {
+    public void setSlot(Type slot) {
         this.slot = slot;
     }
 

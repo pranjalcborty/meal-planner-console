@@ -1,9 +1,9 @@
-package net.therap.mealplanner;
+package net.therap.mealplanner.enums;
 
 /**
  * @author pranjal.chakraborty
  * @since 5/10/17
  */
 public enum Day {
-    sun, mon, tue, wed, thu
+    SUN, MON, TUE, WED, THU
 }

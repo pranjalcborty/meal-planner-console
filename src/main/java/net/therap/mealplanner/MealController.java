@@ -1,5 +1,8 @@
 package net.therap.mealplanner;
 
+import net.therap.mealplanner.helper.ConnectionService;
+import net.therap.mealplanner.helper.MealService;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -20,7 +23,7 @@ public class MealController {
 
             switch (input) {
                 case 1:
-                    service.showCurrentMealPlan(connect, true);
+                    service.showCurrentMealPlan(connect);
                     break;
                 case 2:
                     service.viewItems(connect);

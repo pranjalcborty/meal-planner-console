@@ -1,4 +1,9 @@
-package net.therap.mealplanner;
+package net.therap.mealplanner.helper;
+
+import net.therap.mealplanner.dao.ItemDao;
+import net.therap.mealplanner.dao.MealDao;
+import net.therap.mealplanner.domains.Item;
+import net.therap.mealplanner.domains.Meal;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,22 +33,24 @@ public class MealService {
     private static final String COMMA = ", ";
 
     private MealDao mealDao;
+    private ItemDao itemDao;
 
     public MealService() {
         mealDao = new MealDao();
+        itemDao = new ItemDao();
     }
 
     public void welcomeMessage() {
         System.out.println(MSG1 + MSG2 + MSG3 + MSG4 + MSG5);
     }
 
-    public void showCurrentMealPlan(Connection connect, boolean flag) throws SQLException {
-        printMeal(mealDao.currentMeals(connect), flag);
+    public void showCurrentMealPlan(Connection connect) throws SQLException {
+        printMeal(mealDao.currentMeals(connect));
     }
 
     public void createCustomPlan(Connection connect) throws SQLException {
         System.out.println(MSG7);
-        showCurrentMealPlan(connect, false);
+        printMealWithHeader(mealDao.currentMeals(connect));
         System.out.println(MSG8);
         int slot = Integer.parseInt(new Scanner(System.in).nextLine());
 
@@ -60,40 +67,41 @@ public class MealService {
     public void addNewItem(Connection connect) throws SQLException {
         System.out.println(MSG6);
         String itemName = new Scanner(System.in).nextLine();
-        mealDao.addItem(itemName, connect);
+        itemDao.addItem(itemName, connect);
     }
 
     public void viewItems(Connection connect) throws SQLException {
-        List<Item> items = mealDao.generateItems(connect);
+        List<Item> items = itemDao.generateItems(connect);
         printItem(items, false);
     }
 
-    public void printItem(List<Item> list, boolean flag) {
-        if (flag) {
+    public void printItem(List<Item> list, boolean showHeader) {
+        if (showHeader) {
+            System.out.print("Items: ");
+
             for (Item item : list) {
-                System.out.print(item.getName()+COMMA);
+                System.out.print(item.getName() + COMMA);
             }
-        }
-        else{
+        } else {
             for (Item item : list) {
                 System.out.println(item.getId() + TAB + item.getName());
             }
         }
     }
 
-    public void printMeal(List<Meal> list, boolean flag) {
-        if (!flag) {
-            for (Meal item : list) {
-                System.out.println(item.getId() + TAB + DAY + item.getDay().name() + SLOT + item.getSlot().name());
+    public void printMeal(List<Meal> list) {
+        for (Meal item : list) {
+            if (item.getItems().size() != 0) {
+                System.out.print(DAY + item.getDay().name() + SLOT + item.getSlot().name() + TAB);
+                printItem(item.getItems(), true);
+                System.out.println();
             }
-        } else {
-            for (Meal item : list) {
-                if (item.getItems().size() !=0) {
-                    System.out.println(DAY + item.getDay().name() + SLOT + item.getSlot().name());
-                    printItem(item.getItems(), true);
-                    System.out.println();
-                }
-            }
+        }
+    }
+
+    public void printMealWithHeader(List<Meal> list) {
+        for (Meal item : list) {
+            System.out.println(item.getId() + TAB + DAY + item.getDay().name() + SLOT + item.getSlot().name());
         }
     }
 }

@@ -1,4 +1,4 @@
-package net.therap.mealplanner;
+package net.therap.mealplanner.helper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
  * @author pranjal.chakraborty
  * @since 5/10/17
  */
-public class ConnectionService {
+public class ConnectionHelper {
     private static final String DATABASE_AUTHENTICATION = "jdbc:mysql://localhost/mealplanner?"
             + "user=pranjal&password=password";
 
