@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @author pranjal.chakraborty
  * @since 5/10/17
  */
-public class MealService {
+public class MealHelper {
 
     private static final String MSG1 = "*********Meal planner*********\n";
     private static final String MSG2 = "1\t See current meal plan\n";
@@ -35,7 +35,7 @@ public class MealService {
     private MealDao mealDao;
     private ItemDao itemDao;
 
-    public MealService() {
+    public MealHelper() {
         mealDao = new MealDao();
         itemDao = new ItemDao();
     }
@@ -44,18 +44,18 @@ public class MealService {
         System.out.println(MSG1 + MSG2 + MSG3 + MSG4 + MSG5);
     }
 
-    public void showCurrentMealPlan(Connection connect) throws SQLException {
+    public void showMealPlans(Connection connect) throws SQLException {
         printMeal(mealDao.currentMeals(connect));
     }
 
-    public void createCustomPlan(Connection connect) throws SQLException {
+    public void addPlan(Connection connect) throws SQLException {
         System.out.println(MSG7);
         printMealWithHeader(mealDao.currentMeals(connect));
         System.out.println(MSG8);
         int slot = Integer.parseInt(new Scanner(System.in).nextLine());
 
         System.out.println(MSG9);
-        viewItems(connect);
+        showItems(connect);
         System.out.println(MSG10);
 
         String[] tokens = (new Scanner(System.in).nextLine()).split(SPACE);
@@ -64,13 +64,13 @@ public class MealService {
         }
     }
 
-    public void addNewItem(Connection connect) throws SQLException {
+    public void addItem(Connection connect) throws SQLException {
         System.out.println(MSG6);
         String itemName = new Scanner(System.in).nextLine();
         itemDao.addItem(itemName, connect);
     }
 
-    public void viewItems(Connection connect) throws SQLException {
+    public void showItems(Connection connect) throws SQLException {
         List<Item> items = itemDao.generateItems(connect);
         printItem(items, false);
     }
