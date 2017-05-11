@@ -9,8 +9,8 @@ import java.sql.SQLException;
  * @since 5/10/17
  */
 public class ConnectionHelper {
-    private static final String DATABASE_AUTHENTICATION = "jdbc:mysql://localhost/mealplanner?"
-            + "user=pranjal&password=password";
+    private static final String DATABASE_AUTHENTICATION = "jdbc:mysql://localhost/meal_planner?"
+            + "user=root&password=password";
 
     public static Connection connect() throws SQLException {
         return DriverManager.getConnection(DATABASE_AUTHENTICATION);

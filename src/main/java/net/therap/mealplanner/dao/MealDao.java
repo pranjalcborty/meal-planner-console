@@ -53,10 +53,10 @@ public class MealDao {
         return meals;
     }
 
-    public void addItemToMeal(Connection connect, int itemid, int mealid) throws SQLException {
+    public void addItemToMeal(Connection connect, int itemId, int mealId) throws SQLException {
         PreparedStatement preparedStatement = connect.prepareStatement(ADD_ITEM_TO_MEAL);
-        preparedStatement.setInt(1, mealid);
-        preparedStatement.setInt(2, itemid);
+        preparedStatement.setInt(1, mealId);
+        preparedStatement.setInt(2, itemId);
         preparedStatement.executeUpdate();
     }
 }

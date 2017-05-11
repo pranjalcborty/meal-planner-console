@@ -9,8 +9,8 @@ public class Item {
     private String name;
 
     public Item(int id, String name) {
-        setId(id);
-        setName(name);
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {
