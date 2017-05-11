@@ -20,7 +20,7 @@ public class MealDao {
     private static final String VIEW_MEALS_STRING = "SELECT * FROM meals";
     private static final String ADD_ITEM_TO_MEAL = "INSERT IGNORE INTO meal_item(meal_id, item_id) VALUES (?, ?)";
 
-    public List<Meal> currentMeals() throws SQLException {
+    public List<Meal> getMeals() throws SQLException {
         Connection connect = Helper.connect();
 
         List<Meal> meals = new ArrayList<>();

@@ -14,7 +14,8 @@ import java.util.Map;
  * @since 5/10/17
  */
 public class Helper {
-    private static Map<Integer, Option> optionMap = new HashMap<>();
+
+    private static final Map<Integer, Option> optionMap = new HashMap<>();
     private static final String DATABASE_AUTHENTICATION = "jdbc:mysql://localhost/meal_planner?useSSL=false";
     private static final String USER = "root";
     private static final String PASSWORD = "password";
@@ -30,8 +31,8 @@ public class Helper {
         return DriverManager.getConnection(DATABASE_AUTHENTICATION, USER, PASSWORD);
     }
 
-    public static Option getOption(int input){
-        if(optionMap.containsKey(input)){
+    public static Option getOption(int input) {
+        if (optionMap.containsKey(input)) {
             return optionMap.get(input);
         }
 

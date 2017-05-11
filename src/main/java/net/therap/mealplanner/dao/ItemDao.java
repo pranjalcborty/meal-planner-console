@@ -27,15 +27,15 @@ public class ItemDao {
 
         PreparedStatement preparedStatement = connect.prepareStatement(GET_ITEMID_STRING);
         preparedStatement.setInt(1, daySlot);
-        ResultSet resultSet1 = preparedStatement.executeQuery();
+        ResultSet mealResultSet = preparedStatement.executeQuery();
 
-        while (resultSet1.next()) {
+        while (mealResultSet.next()) {
             PreparedStatement preparedStatement1 = connect.prepareStatement(GET_ITEMNAME_STRING);
-            preparedStatement1.setInt(1, resultSet1.getInt("item_id"));
+            preparedStatement1.setInt(1, mealResultSet.getInt("item_id"));
             ResultSet resultSet2 = preparedStatement1.executeQuery();
 
             if (resultSet2.next()) {
-                items.add(new Item(resultSet1.getInt("item_id"), resultSet2.getString("item_name")));
+                items.add(new Item(mealResultSet.getInt("item_id"), resultSet2.getString("item_name")));
             }
         }
 

@@ -5,7 +5,6 @@ import net.therap.mealplanner.dao.MealDao;
 import net.therap.mealplanner.domains.Item;
 import net.therap.mealplanner.domains.Meal;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -45,12 +44,12 @@ public class MealHelper {
     }
 
     public void showMealPlans() throws SQLException {
-        printMeal(mealDao.currentMeals());
+        printMeal(mealDao.getMeals());
     }
 
     public void addPlan() throws SQLException {
         System.out.println(MSG7);
-        printMealWithHeader(mealDao.currentMeals());
+        printMealWithHeader(mealDao.getMeals());
         System.out.println(MSG8);
         int slot = Integer.parseInt(new Scanner(System.in).nextLine());
 
