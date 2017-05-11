@@ -26,13 +26,13 @@ public class Main {
                     helper.showMealPlans();
                     break;
                 case VIEW_ITEMS:
-                    helper.showItems(connect);
+                    helper.showItems();
                     break;
                 case ADD_PLAN:
-                    helper.addPlan(connect);
+                    helper.addPlan();
                     break;
                 case ADD_ITEM:
-                    helper.addItem(connect);
+                    helper.addItem();
                     break;
                 case INVALID:
                     helper.invalidMessage();
