@@ -15,8 +15,9 @@ import java.util.Map;
  */
 public class Helper {
     private static Map<Integer, Option> optionMap = new HashMap<>();
-    private static final String DATABASE_AUTHENTICATION = "jdbc:mysql://localhost/meal_planner?"
-            + "user=root&password=password";
+    private static final String DATABASE_AUTHENTICATION = "jdbc:mysql://localhost/meal_planner?useSSL=false";
+    private static final String USER = "root";
+    private static final String PASSWORD = "password";
 
     static {
         optionMap.put(1, Option.VIEW_PLAN);
@@ -26,7 +27,7 @@ public class Helper {
     }
 
     public static Connection connect() throws SQLException {
-        return DriverManager.getConnection(DATABASE_AUTHENTICATION);
+        return DriverManager.getConnection(DATABASE_AUTHENTICATION, USER, PASSWORD);
     }
 
     public static Option getOption(int input){

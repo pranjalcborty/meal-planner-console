@@ -15,15 +15,16 @@ import java.sql.SQLException;
 public class DayDao {
     private static final String FIND_DAY = "SELECT * FROM meals WHERE meal_id = ?";
 
-    public static Day getDay(int daySlot) throws SQLException {
-        Connection connect = Helper.connect();
+    public static Day getDay(Connection connect, int daySlot) throws SQLException {
 
         PreparedStatement preparedStatement = connect.prepareStatement(FIND_DAY);
         preparedStatement.setInt(1, daySlot);
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        connect.close();
+        if(resultSet.next()){
+            return Day.valueOf(resultSet.getString("day"));
+        }
 
-        return Day.valueOf(resultSet.getString("day"));
+        return null;
     }
 }

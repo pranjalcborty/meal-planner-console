@@ -55,7 +55,7 @@ public class MealHelper {
         int slot = Integer.parseInt(new Scanner(System.in).nextLine());
 
         System.out.println(MSG9);
-        showItems();
+        showMenuItems();
         System.out.println(MSG10);
 
         String[] tokens = (new Scanner(System.in).nextLine()).split(SPACE);
@@ -72,28 +72,33 @@ public class MealHelper {
 
     public void showItems() throws SQLException {
         List<Item> items = itemDao.generateItems();
-        printItem(items, false);
-    }
 
-    public void printItem(List<Item> list, boolean showHeader) {
-        if (showHeader) {
-            System.out.print("Items: ");
-
-            for (Item item : list) {
-                System.out.print(item.getName() + COMMA);
-            }
-        } else {
-            for (Item item : list) {
-                System.out.println(item.getId() + TAB + item.getName());
-            }
+        for (Item item : items) {
+            System.out.println(item.getName());
         }
     }
 
-    public void printMeal(List<Meal> list) {
+    public void showMenuItems() throws SQLException{
+        List<Item> items = itemDao.generateItems();
+
+        for (Item item : items) {
+            System.out.println(item.getId() + TAB + item.getName());
+        }
+    }
+
+    public void showMealItems(List<Item> items) throws SQLException{
+        System.out.print("Items: ");
+        for (Item item : items) {
+            System.out.print(item.getName() + COMMA);
+        }
+    }
+
+
+    public void printMeal(List<Meal> list) throws SQLException{
         for (Meal item : list) {
             if (item.getItems().size() != 0) {
                 System.out.print(DAY + item.getDay().name() + SLOT + item.getSlot().name() + TAB);
-                printItem(item.getItems(), true);
+                showMealItems(item.getItems());
                 System.out.println();
             }
         }

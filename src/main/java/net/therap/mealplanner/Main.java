@@ -3,7 +3,6 @@ package net.therap.mealplanner;
 import net.therap.mealplanner.helper.Helper;
 import net.therap.mealplanner.helper.MealHelper;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -15,7 +14,6 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         MealHelper helper = new MealHelper();
-        Connection connect = Helper.connect();
 
         while (true) {
             helper.welcomeMessage();
